@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
@@ -52,6 +53,6 @@ class AuthController extends Controller
 public function logout(Request $request)
 {
     $request->user()->token()->revoke();
-    return response()->json(['message' => 'Successfully logged out']);
+    return response()->json([ 'status_code' => Response::HTTP_OK,'message' => 'Successfully logged out']);
 }
 }
