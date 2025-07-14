@@ -73,7 +73,11 @@ public function getMessage(Request $request)
         return response()->json(['message' => 'No messages found'], 404);
     }
 
-    return response()->json(['messages' => MessageResource::collection($messages)]);
+$messagesList = MessageResource::collection($messages);
+
+return response()->json([
+    'messages' => $messagesList
+]);
 }
 
 
@@ -97,9 +101,13 @@ public function getAllConversations(Request $request)
         }
     }
 
-  return response()->json([
-        'conversations' => MessageResource::collection(array_values($conversations))
-    ]);}
+  $conversationsList = MessageResource::collection(array_values($conversations));
+
+return response()->json([
+    'conversations' => $conversationsList
+]);
 
 
+
+}
 }
