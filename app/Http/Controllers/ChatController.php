@@ -28,14 +28,12 @@ public function send(Request $request)
             'message' => $request->message
         ]);
 
-        // ✅ Save message to database
         $message = Message::create([
             'from_user_id' => $fromUser->id,
             'to_user_id' => $toUserId,
             'message' => $request->message
         ]);
 
-        // ✅ Broadcast event
         broadcast(new PrivateMessageSent($message->message, $fromUser->id, $toUserId))->toOthers();
 
         Log::info('ChatController@send: PrivateMessageSent event dispatched successfully');

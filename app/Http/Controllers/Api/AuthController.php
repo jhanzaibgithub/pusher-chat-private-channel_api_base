@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('MyAppToken')->accessToken;
 
-        return response()->json(['token' => $token, 'user' => $user], 201);
+        return response()->json(['user' => $user, 'token' => $token], 201);
     }
 
     // Login
@@ -47,6 +47,6 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = $user->createToken('MyAppToken')->accessToken;
 
-        return response()->json(['token' => $token, 'user' => $user]);
+        return response()->json(['user' => $user, 'token' => $token], 201);
     }
 }
