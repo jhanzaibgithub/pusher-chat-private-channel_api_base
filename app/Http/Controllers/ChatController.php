@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use App\Models\Message;
 use App\Http\Resources\MessageResource;
+use Illuminate\Http\Response;
 
 class ChatController extends Controller
 {
@@ -39,13 +40,13 @@ public function send(Request $request)
 
         Log::info('ChatController@send: PrivateMessageSent event dispatched successfully');
 
-        return response()->json(['status' => 'Message sent', 'message' => $message]);
+        return response()->json(['status_code' => Response::HTTP_CREATED, 'response' => 'Message sent',]);
     } catch (Exception $e) {
         Log::error('ChatController@send: Error occurred', [
             'error' => $e->getMessage(),
             'trace' => $e->getTraceAsString()
         ]);
-        return response()->json(['error' => 'Failed to send message'], 500);
+        return response()->json(['status_code' => Response::HTTP_INTERNAL_SERVER_ERROR, 'error' => 'Failed to send message'], 500);
     }
 }
 public function getMessage(Request $request)
@@ -76,6 +77,7 @@ public function getMessage(Request $request)
 $messagesList = MessageResource::collection($messages);
 
 return response()->json([
+        'status_code' => Response::HTTP_OK,
     'messages' => $messagesList
 ]);
 }
@@ -104,6 +106,7 @@ public function getAllConversations(Request $request)
   $conversationsList = MessageResource::collection(array_values($conversations));
 
 return response()->json([
+    'status_code' => Response::HTTP_OK,
     'conversations' => $conversationsList
 ]);
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\ChatController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/send-message', [ChatController::class, 'send']);
      Route::post('/get-messages', [ChatController::class, 'getMessage']);
     Route::get('/conversations', [ChatController::class, 'getAllConversations']);
